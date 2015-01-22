@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "Install Ansible"
+chroot $1 pip install ansible -q
+chroot $1 /bin/bash -c "mkdir /etc/ansible; echo -e \"[virt]\nlocalhost ansible_connection=local\" >/etc/ansible/hosts"
+
+echo "add ssh keys to known_hosts file"
+chroot $1 mkdir -p /root/.ssh
+chroot $1 /bin/bash -c "ssh-keyscan localhost >> /root/.ssh/known_hosts"
+chroot $1 /bin/bash -c "ssh-keyscan github.com >> /root/.ssh/known_hosts"
+
+echo "call ansible-pull"
+chroot $1 /bin/bash -c "ansible-pull -d /var/lib/ansible/local -U REPOSITORY 2>&1 | tee /var/log/ansible.log"
+
+echo "END of execsript"
