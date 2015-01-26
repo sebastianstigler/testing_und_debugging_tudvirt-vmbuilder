@@ -51,7 +51,7 @@ sudo vmbuilder kvm ubuntu -c config.cfg                 \
                           --tmpfs=2000                  \
                           -v --debug 2>&1 | tee logfile
 
-#                          --libvirt=qemu:///system
+#                          --libvirt=qemu:///system      \
 
 #******************************************************************************
 #*** cleanup temp dir

@@ -9,6 +9,6 @@ chroot $1 /bin/bash -c "ssh-keyscan localhost >> /root/.ssh/known_hosts"
 chroot $1 /bin/bash -c "ssh-keyscan github.com >> /root/.ssh/known_hosts"
 
 echo "call ansible-pull"
-chroot $1 /bin/bash -c "ansible-pull -d /var/lib/ansible/local -U REPOSITORY 2>&1 | tee /var/log/ansible.log"
+chroot $1 /bin/bash -c "ansible-pull -d /var/lib/ansible/local -U REPOSITORY -e initial_run=True 2>&1 | tee /var/log/ansible.log"
 
 echo "END of execsript"
