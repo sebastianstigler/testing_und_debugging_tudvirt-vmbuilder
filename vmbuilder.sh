@@ -40,7 +40,8 @@ chmod 755 ${TEMP}/exec.sh
 #******************************************************************************
 #*** cleanup old image
 
-rm -rf ubuntu-kvm
+rm -rf ubuntu-kvm tmp
+mkdir tmp
 
 #******************************************************************************
 #*** Build new image and provision it via ansible playbook
@@ -49,6 +50,7 @@ sudo vmbuilder kvm ubuntu -c config.cfg                 \
                           --exec=${TEMP}/exec.sh        \
                           --firstboot=`pwd`/boot.sh     \
                           --tmpfs=2000                  \
+                          --tmp=`pwd`/tmp               \
                           -v --debug 2>&1 | tee logfile
 
 #                          --libvirt=qemu:///system      \
