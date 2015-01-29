@@ -11,4 +11,8 @@ chroot $1 /bin/bash -c "ssh-keyscan github.com >> /root/.ssh/known_hosts"
 echo "call ansible-pull"
 chroot $1 /bin/bash -c "ansible-pull -d /var/lib/ansible/local -U REPOSITORY -e initial_run=True 2>&1 | tee /var/log/ansible.log"
 
+echo "Wipe free disk space to reduce size of resulting image"
+# The dd command wipes up to count * bs = 10*1000*1000 * 512 bytes
+chroot $1 /bin/bash -c " dd if=/dev/zero count=10MB of=xx || true; ls -l xx ; rm -f xx"
+
 echo "END of execsript"
