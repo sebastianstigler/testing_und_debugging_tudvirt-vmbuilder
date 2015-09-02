@@ -1,4 +1,7 @@
 #!/bin/bash
+echo "Update Python Setuptools"
+chroot $1 /bin/bash -c "pip install setuptools -U"
+
 echo "Install Ansible"
 chroot $1 pip install ansible -q
 chroot $1 /bin/bash -c "mkdir /etc/ansible; echo -e \"[virt]\nlocalhost ansible_connection=local\" >/etc/ansible/hosts"
